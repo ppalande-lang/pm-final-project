@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamLine Spotlight · Future-State Journey Map</title>
+<style>
+  :root {
+    --ink: #1c1f26;
+    --muted: #5b6270;
+    --line: #dde1e8;
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --accent: #b4532a;
+    --accent-soft: #fbeee7;
+    --good: #2f6b4f;
+    --good-soft: #e7f3ec;
+    --bad: #8a2f2f;
+    --bad-soft: #f8e9e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 32px 28px 40px; }
+  header h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.01em; }
+  header .sub { color: var(--muted); margin: 0 0 20px; }
+  .tag {
+    display: inline-block; font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--accent); background: var(--accent-soft);
+    padding: 3px 9px; border-radius: 999px; margin-bottom: 10px;
+  }
+
+  .context { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .context div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .context h3 { margin: 0 0 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .context p { margin: 0; font-size: 14px; }
+
+  .shift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; margin-bottom: 26px; }
+  .shift .box { border-radius: 10px; padding: 12px 16px; font-size: 14px; }
+  .shift .before { background: var(--bad-soft); border: 1px solid #ecc9c9; }
+  .shift .after { background: var(--good-soft); border: 1px solid #c4e0cf; }
+  .shift strong { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+  .shift .before strong { color: var(--bad); }
+  .shift .after strong { color: var(--good); }
+  .shift .arrow { align-self: center; font-size: 26px; color: var(--muted); }
+
+  .timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .timeline::before {
+    content: ""; position: absolute; top: 19px; left: 6%; right: 6%;
+    height: 3px; background: linear-gradient(90deg, var(--accent), var(--good));
+    border-radius: 2px;
+  }
+  .stage { position: relative; }
+  .dot {
+    position: relative; z-index: 1; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--ink); color: #fff; font-weight: 700; display: grid; place-items: center;
+    margin: 0 auto 12px; border: 4px solid var(--bg);
+  }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 12px; height: calc(100% - 52px); }
+  .card h2 { margin: 0 0 10px; font-size: 17px; text-align: center; }
+  .row { margin-bottom: 10px; }
+  .row:last-child { margin-bottom: 0; }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 2px; }
+  .row p { margin: 0; font-size: 13.5px; }
+  .ab { color: var(--accent); font-weight: 700; }
+  .feel { font-style: italic; }
+  .pain { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+  .ev { color: var(--muted); font-size: 12px; }
+
+  .adv { margin-top: 28px; }
+  .adv h2 { font-size: 18px; margin: 0 0 12px; }
+  .adv ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; counter-reset: a; }
+  .adv li { counter-increment: a; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--good); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .adv li::before { content: counter(a) ". "; font-weight: 700; color: var(--good); }
+  .adv li strong { display: inline; }
+
+  .notes { margin-top: 22px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+  .notes p { margin: 0 0 4px; }
+
+  @media (max-width: 900px) {
+    .context, .adv ol, .timeline { grid-template-columns: 1fr 1fr; }
+    .timeline::before { display: none; }
+  }
+  @media (max-width: 600px) {
+    .context, .adv ol, .timeline, .shift { grid-template-columns: 1fr; }
+    .shift .arrow { transform: rotate(90deg); justify-self: center; }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { padding: 12px; }
+    @page { size: landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header>
+    <span class="tag">Scenario A · StreamLine Spotlight · Restore &amp; curate</span>
+    <h1>Future-State Journey Map: from 20 minutes of scrolling to a trusted pick</h1>
+    <p class="sub">Module 2 · Exercise 2. How Spotlight replaces the Discerning Long-Time Viewer's manual workarounds with one streamlined evening inside StreamLine.</p>
+  </header>
+
+  <section class="context">
+    <div>
+      <h3>Persona</h3>
+      <p><strong>The Discerning Long-Time Viewer.</strong> A long-tenured, high-engagement subscriber who cares about quality over quantity (UXR-01, 02, 04, 10).</p>
+    </div>
+    <div>
+      <h3>Goal</h3>
+      <p>Find something genuinely worth their evening, quickly, and trust the choice without leaving StreamLine to check.</p>
+    </div>
+    <div>
+      <h3>Value proposition</h3>
+      <p>For viewers who want quality over volume, a small curated Spotlight where each pick says why it's there.</p>
+    </div>
+  </section>
+
+  <section class="shift">
+    <div class="box before">
+      <strong>Today (the workaround)</strong>
+      Scroll ~20 minutes → search fails → ask a friend → close the app for a DVD or a competitor's two hand-picked films → eventually cancel.
+    </div>
+    <div class="arrow">→</div>
+    <div class="box after">
+      <strong>Future state (Spotlight)</strong>
+      Open → see a few curated picks → read why each was chosen → play within minutes → come back next week because the picks were good.
+    </div>
+  </section>
+
+  <section class="timeline" aria-label="Four-stage future-state journey">
+
+    <article class="stage">
+      <div class="dot">1</div>
+      <div class="card">
+        <h2>Open &amp; Orient</h2>
+        <div class="row">
+          <div class="label">User action</div>
+          <p>Opens app, sees Tonight's Spotlight first <span class="ab">→</span> no scrolling through 15,000 titles.</p>
+        </div>
+        <div class="row">
+          <div class="label">Internal state</div>
+          <p class="feel">"I've got one evening, don't waste it." Relief replaces choice anxiety.</p>
+        </div>
+        <div class="row pain">
+          <div class="label">Pain point addressed</div>
+          <p>Endless scrolling and choice overload <span class="ab">→</span> a short, finite list to choose from.</p>
+          <p class="ev">UXR-01, UXR-12</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="dot">2</div>
+      <div class="card">
+        <h2>Evaluate &amp; Trust</h2>
+        <div class="row">
+          <div class="label">User action</div>
+          <p>Reads each pick's one-line curator reason <span class="ab">→</span> judges fit without leaving the app.</p>
+        </div>
+        <div class="row">
+          <div class="label">Internal state</div>
+          <p class="feel">From skeptical to "someone with taste picked this for a reason."</p>
+        </div>
+        <div class="row pain">
+          <div class="label">Pain point addressed</div>
+          <p>Repetitive, untrusted algorithm picks <span class="ab">→</span> human-led picks with a visible reason.</p>
+          <p class="ev">UXR-02, UXR-10 · BUG-1091</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="dot">3</div>
+      <div class="card">
+        <h2>Commit &amp; Watch</h2>
+        <div class="row">
+          <div class="label">User action</div>
+          <p>Presses play on a pick, or a restored hidden gem <span class="ab">→</span> evening spent watching.</p>
+        </div>
+        <div class="row">
+          <div class="label">Internal state</div>
+          <p class="feel">Confident and settled. No second-guessing, no need to check elsewhere.</p>
+        </div>
+        <div class="row pain">
+          <div class="label">Pain point addressed</div>
+          <p>Leaving for a DVD, a friend's tip or a competitor <span class="ab">→</span> watching inside StreamLine.</p>
+          <p class="ev">UXR-01, UXR-04, UXR-10</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="dot">4</div>
+      <div class="card">
+        <h2>Return &amp; Rely</h2>
+        <div class="row">
+          <div class="label">User action</div>
+          <p>Returns for the next Spotlight refresh <span class="ab">→</span> StreamLine becomes their trusted source of good picks.</p>
+        </div>
+        <div class="row">
+          <div class="label">Internal state</div>
+          <p class="feel">"StreamLine knows what's good." Loyalty, not habit.</p>
+        </div>
+        <div class="row pain">
+          <div class="label">Pain point addressed</div>
+          <p>Cancelling for a curated competitor <span class="ab">→</span> a reason to stay subscribed.</p>
+          <p class="ev">UXR-04</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="adv">
+    <h2>Competitive advantages over the manual workaround</h2>
+    <ol>
+      <li><strong>Choose and watch in one place.</strong> No switching to a DVD, a friend's advice or another service; the decision and the play happen inside StreamLine.</li>
+      <li><strong>Curation that's always there, with a reason.</strong> Unlike a friend's occasional tip, the Spotlight is ready every evening and explains why each pick earned its place.</li>
+      <li><strong>Draws on the whole library.</strong> A competitor's two-film email is limited to two titles; Spotlight can restore and surface hidden gems from 15,000 titles the viewer already pays for.</li>
+    </ol>
+  </section>
+
+  <section class="notes">
+    <p><strong>Prerequisites, not part of the journey:</strong> stages 3 and 4 only work if playback is reliable on Smart TVs (BUG-1042) and picks saved on one device appear on another (BUG-1058, BUG-1061).</p>
+    <p><strong>Status:</strong> a future-state hypothesis built from 12 interviews and 10 bug reports. Not yet validated with usage data such as sessions that end with nothing played.</p>
+  </section>
+
+</main>
+</body>
+</html>
